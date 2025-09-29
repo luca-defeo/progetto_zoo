@@ -31,7 +31,7 @@ public class EnclosureController {
         return ResponseEntity.ok(enclosureInterface.findAll());
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<EnclosureDtoOutput> updateById(@PathVariable Long id, @RequestBody EnclosureDtoInput enclosureDtoInput) {
         return ResponseEntity.ok(enclosureInterface.updateById(id, enclosureDtoInput));
     }

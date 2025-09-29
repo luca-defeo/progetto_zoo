@@ -32,14 +32,14 @@ public class UserService implements UserInterface {
 
             List<Animal> animals = new ArrayList<>();
             if (userDtoInput.getAnimals() != null && !userDtoInput.getAnimals().isEmpty()){
-                 animals = animalRepository.findAllById(userDtoInput.getAnimals());
+                animals = animalRepository.findAllById(userDtoInput.getAnimals());
 
             }
 
             List<Enclosure> enclosures = new ArrayList<>();
 
             if (userDtoInput.getEnclosures() != null && !userDtoInput.getEnclosures().isEmpty()){
-               enclosures = enclosureRepository.findAllById(userDtoInput.getEnclosures());
+                enclosures = enclosureRepository.findAllById(userDtoInput.getEnclosures());
             }
 
             User user = userMapper.toUser(userDtoInput,animals,enclosures);
@@ -121,6 +121,7 @@ public class UserService implements UserInterface {
 
             user.setName(userDtoInput.getName());
             user.setLastName(userDtoInput.getLastName());
+            user.setUsername(userDtoInput.getUsername());
             user.setRole(userDtoInput.getRole());
             if (user.isOperator()) {
                 user.setOperatorType(userDtoInput.getOperatorType());
