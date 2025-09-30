@@ -63,15 +63,15 @@ public class TicketService implements TicketInterface {
     public List<TicketDto> getUnassignedTickets() {
         User currentUser = getCurrentUser();
 
-        // Se è un operatore con un tipo specifico
+
         if (currentUser.isOperator() && currentUser.getOperatorType() != null) {
-            // Ottieni ticket per il suo tipo
+
             List<Ticket> myTypeTickets = ticketRepository.findByUserIsNullAndRecommendedRole(currentUser.getOperatorType());
 
-            // Ottieni ticket generici (senza ruolo specifico)
+
             List<Ticket> genericTickets = ticketRepository.findByUserIsNullAndRecommendedRoleIsNull();
 
-            // Unisci le due liste
+
             List<Ticket> allTickets = new ArrayList<>(myTypeTickets);
             allTickets.addAll(genericTickets);
 
@@ -80,7 +80,7 @@ public class TicketService implements TicketInterface {
                     .collect(Collectors.toList());
         }
 
-        // Admin/Manager/Operatori senza tipo vedono tutti i ticket
+
         List<Ticket> unassignedTickets = ticketRepository.findByUserIsNull();
         return unassignedTickets.stream()
                 .map(ticketMapper::toDto)

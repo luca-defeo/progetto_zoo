@@ -27,7 +27,7 @@ public class EnclosureController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<List<EnclosureDtoInput>> findAll() {
+    public ResponseEntity<List<EnclosureDtoOutput>> findAll() {
         return ResponseEntity.ok(enclosureInterface.findAll());
     }
 

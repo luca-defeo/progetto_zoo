@@ -33,7 +33,7 @@ public class UserController {
 
     @PostMapping("/add")
     public ResponseEntity<UserDtoOutput> addUser(@RequestBody UserDtoInput userDtoInput) {
-        // Hash della password prima di salvare
+
         if (userDtoInput.getPassword() != null && !userDtoInput.getPassword().isEmpty()) {
             userDtoInput.setPassword(passwordEncoder.encode(userDtoInput.getPassword()));
         }
@@ -43,7 +43,7 @@ public class UserController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<UserDtoOutput> updateUser(@PathVariable Long id, @RequestBody UserDtoInput userDtoInput) {
-        // Hash della password solo se viene fornita (per aggiornamenti)
+
         if (userDtoInput.getPassword() != null && !userDtoInput.getPassword().isEmpty()) {
             userDtoInput.setPassword(passwordEncoder.encode(userDtoInput.getPassword()));
         }

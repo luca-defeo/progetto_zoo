@@ -28,17 +28,17 @@ public class CustomUserService implements UserDetailsService {
 
         User user = userOpt.get();
 
-        // Usa il nome dell'enum (ADMIN, MANAGER, OPERATOR) come authority
+
         String authority = user.getRole().name();
         SimpleGrantedAuthority grantedAuthority = new SimpleGrantedAuthority(authority);
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                true, // enabled
-                true, // accountNonExpired
-                true, // credentialsNonExpired
-                true, // accountNonLocked
+                true,
+                true,
+                true,
+                true,
                 Collections.singletonList(grantedAuthority)
         );
     }

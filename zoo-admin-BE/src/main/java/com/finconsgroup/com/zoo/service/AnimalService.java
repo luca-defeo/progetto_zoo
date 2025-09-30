@@ -74,28 +74,37 @@ public class AnimalService implements AnimalInterface {
                     () -> new InvalidInputException("Nessun animale presente con questo id")
             );
 
-            User oldUser = userRepository.findById(animal.getUser().getId()).orElseThrow(
-                    () -> new InvalidInputException("Nessuno user con questo id")
-            );
 
-            User newUser = userRepository.findById(animalDto.getUser()).orElseThrow(
-                    () -> new InvalidInputException("Nessuno user con questo id")
-            );
+            User newUser = null;
+            if (animalDto.getUser() != null) {
+                newUser = userRepository.findById(animalDto.getUser()).orElseThrow(
+                        () -> new InvalidInputException("Nessuno user con questo id")
+                );
+            }
 
-            Enclosure oldEnclosure = enclosureRepository.findById(animal.getEnclosure().getId()).orElseThrow(
-                    () -> new InvalidInputException("Nessuna gabbia presente con questo id")
-            );
+            Enclosure newEnclosure = null;
+            if (animalDto.getEnclosure() != null) {
+                newEnclosure = enclosureRepository.findById(animalDto.getEnclosure()).orElseThrow(
+                        () -> new InvalidInputException("Nessuna gabbia presente con questo id")
+                );
+            }
 
-            Enclosure newEnclosure = enclosureRepository.findById(animalDto.getEnclosure()).orElseThrow(
-                    () -> new InvalidInputException("Nessuna gabbia presente con questo id")
-            );
 
-            oldUser.getAnimals().remove(animal);
-            oldEnclosure.getAnimals().remove(animal);
+            if (animal.getUser() != null) {
+                User oldUser = animal.getUser();
+                oldUser.getAnimals().remove(animal);
+                userRepository.save(oldUser);
+            }
+
+            if (animal.getEnclosure() != null) {
+                Enclosure oldEnclosure = animal.getEnclosure();
+                oldEnclosure.getAnimals().remove(animal);
+                enclosureRepository.save(oldEnclosure);
+            }
+
 
             animal.setUser(newUser);
             animal.setEnclosure(newEnclosure);
-
             animal.setName(animalDto.getName());
             animal.setWeight(animalDto.getWeight());
 
@@ -103,19 +112,24 @@ public class AnimalService implements AnimalInterface {
                 animal.setCategory(animalDto.getCategory());
             }
 
-
-
             Animal saved = animalRepository.save(animal);
 
-            newUser.getAnimals().add(saved);
-            newEnclosure.getAnimals().add(saved);
 
-            return animalMapper.toAnimalDto(animal);
+            if (newUser != null) {
+                newUser.getAnimals().add(saved);
+                userRepository.save(newUser);
+            }
+
+            if (newEnclosure != null) {
+                newEnclosure.getAnimals().add(saved);
+                enclosureRepository.save(newEnclosure);
+            }
+
+            return animalMapper.toAnimalDto(saved);
         } else {
             throw new InvalidInputException("Elemento passato non valido");
         }
     }
-
     @Override
     public AnimalDto deleteAnimal(Long id) {
         Animal animal = animalRepository.findById(id).orElseThrow(

@@ -56,7 +56,7 @@ public class UserMapper {
         user.setName(userDtoInput.getName());
         user.setLastName(userDtoInput.getLastName());
 
-        // Aggiunti username e password
+
         user.setUsername(userDtoInput.getUsername());
         user.setPassword(userDtoInput.getPassword());
 

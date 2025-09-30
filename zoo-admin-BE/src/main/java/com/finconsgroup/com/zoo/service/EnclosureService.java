@@ -71,9 +71,9 @@ public class EnclosureService implements EnclosureInterface {
     }
 
     @Override
-    public List<EnclosureDtoInput> findAll() {
+    public List<EnclosureDtoOutput> findAll() {
         return enclosureRepository.findAll().stream()
-                .map(enclosureMapper::toDtoLong)
+                .map(enclosureMapper::toDto)
                 .toList();
     }
 

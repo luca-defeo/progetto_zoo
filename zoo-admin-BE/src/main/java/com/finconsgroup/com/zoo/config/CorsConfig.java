@@ -1,4 +1,4 @@
-// Nel tuo src/main/java/.../config/CorsConfig.java
+
 package com.finconsgroup.com.zoo.config;
 
 import org.springframework.context.annotation.Configuration;

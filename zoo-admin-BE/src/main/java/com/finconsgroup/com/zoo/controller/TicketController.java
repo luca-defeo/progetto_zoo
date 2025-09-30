@@ -78,7 +78,7 @@ public class TicketController {
         }
     }
 
-    // NUOVO: Endpoint per concludere un ticket (solo operatori sui propri ticket)
+
     @PostMapping("/{id}/complete")
     @PreAuthorize("hasAuthority('OPERATOR')")
     public ResponseEntity<TicketDto> completeTicket(@PathVariable Long id) {
@@ -86,12 +86,12 @@ public class TicketController {
             TicketDto ticket = ticketService.getTicketById(id);
             User currentUser = getCurrentUser();
 
-            // Verifica che il ticket sia assegnato all'utente corrente
+
             if (ticket.getUser() == null || !ticket.getUser().equals(currentUser.getId())) {
                 return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
             }
 
-            // Elimina il ticket
+
             TicketDto completedTicket = ticketService.deleteTicketById(id);
             return ResponseEntity.ok(completedTicket);
         } catch (RuntimeException e) {
@@ -138,7 +138,7 @@ public class TicketController {
         }
     }
 
-    // Metodo helper per ottenere l'utente corrente
+
     private User getCurrentUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;

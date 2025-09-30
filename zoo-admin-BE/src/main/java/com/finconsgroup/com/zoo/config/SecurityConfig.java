@@ -58,7 +58,7 @@ public class SecurityConfig {
                 )
                 .httpBasic(httpBasic -> httpBasic
                         .authenticationEntryPoint((request, response, authException) -> {
-                            // Solo per endpoint NON /api/auth/**
+
                             if (!request.getRequestURI().startsWith("/api/auth/")) {
                                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                             }
